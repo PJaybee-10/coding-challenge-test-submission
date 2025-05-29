@@ -1,0 +1,15 @@
+.errorContainer {
+  background-color: #fff5f5;
+  border: 1px solid #ff8a8a;
+  border-radius: var(--border-radius-default);
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  max-width: var(--width-input);
+}
+
+.errorMessage {
+  color: #e53e3e;
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+}

@@ -7,16 +7,24 @@ import $ from './Form.module.css';
 interface FormEntry {
   name: string;
   placeholder: string;
-  // TODO: Defined a suitable type for extra props
-  // This type should cover all different of attribute types
-  extraProps: any;
+  extraProps: {
+    value?: string;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    required?: boolean;
+    disabled?: boolean;
+    type?: string;
+    min?: number | string;
+    max?: number | string;
+    pattern?: string;
+    [key: string]: any; // For any other props we might need
+  };
 }
 
 interface FormProps {
   label: string;
   loading: boolean;
   formEntries: FormEntry[];
-  onFormSubmit: () => void;
+  onFormSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   submitText: string;
 }
 
@@ -28,7 +36,7 @@ const Form: FunctionComponent<FormProps> = ({
   submitText
 }) => {
   return (
-    <form onSubmit={onFormSubmit}>
+    <form onSubmit={(e) => onFormSubmit(e)}>
       <fieldset>
         <legend>{label}</legend>
         {formEntries.map(({ name, placeholder, extraProps }, index) => (
@@ -37,7 +45,8 @@ const Form: FunctionComponent<FormProps> = ({
               key={`${name}-${index}`}
               name={name}
               placeholder={placeholder}
-              {...extraProps}
+              value={extraProps.value || ''}
+              onChange={extraProps.onChange}
             />
           </div>
         ))}
